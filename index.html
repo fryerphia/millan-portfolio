@@ -497,7 +497,7 @@
  
   .contact-info-card {
     background: #0a0a0a;
-    border: 1px solid #0A2463;
+    border: 1px solid var(--secondary-yellow);
     border-radius: 10px;
     padding: 20px 24px;
     display: flex;
@@ -512,7 +512,7 @@
   }
  
   .contact-info-row + .contact-info-row {
-    border-top: 1px solid #0A2463;
+    border-top: 1px solid var(--secondary-yellow);
     padding-top: 20px;
   }
  
@@ -520,12 +520,13 @@
     width: 44px;
     height: 44px;
     border-radius: 8px;
-    background: #051336;
+    background: #000;
+    border: 1.5px solid var(--secondary-yellow);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    color: #FFD500;
+    color: var(--secondary-yellow);
   }
  
   .contact-icon svg {
@@ -917,11 +918,12 @@
         <textarea id="contact-message" placeholder="Tell me about your project/concern/question..."></textarea>
       </div>
 
-      <button class="contact-submit-btn" type="button">
+      <button id="contact-submit" class="contact-submit-btn" type="button">
         <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
         Send Message
       </button>
     </div>
+    
 
   </div>
 </section>
@@ -929,6 +931,35 @@
     <footer>
         <p>&copy; 2026 Norriene Grace Millan. All rights reserved.</p>
     </footer>
+</body>
+<script>
+(function(){
+  const btn = document.getElementById('contact-submit');
+  if(!btn) return;
+  btn.addEventListener('click', function(){
+    const name = document.getElementById('contact-name').value.trim();
+    const email = document.getElementById('contact-email').value.trim();
+    const message = document.getElementById('contact-message').value.trim();
+
+    if(!name || !email || !message){
+      alert('Please fill in your name, email, and message.');
+      return;
+    }
+
+    const subject = `Message from ${name}`;
+    const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
+    const mailto = 'mailto:millanorrienegrace@gmail.com' + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+
+    // Open user's email client
+    window.location.href = mailto;
+
+    // Notify user (note: this cannot guarantee the email was actually sent)
+    setTimeout(function(){
+      alert('Email client opened. Please send the email from your email client.');
+    }, 500);
+  });
+})();
+</script>
 
 </body>
 </html>
