@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Norriene Grace Millan | Portfolio</title>
+    <style>
+        /* CSS Variables for unified theming */
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-surface: #111111;
+            --primary-blue: #0A2463; 
+            --blue-gradient: linear-gradient(145deg, #0A2463 0%, #051336 100%);
+            --secondary-white: #F8F9FA;
+            --text-muted: #a0aec0;
+            --secondary-yellow: #FFD500;
+        }
+
+        /* Global Reset */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--secondary-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Frosted Glass Navigation */
+        nav {
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        nav .logo {
+            color: var(--secondary-white);
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-decoration: none;
+            letter-spacing: 1.5px;
+        }
+
+        nav .logo span {
+            color: var(--secondary-yellow);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 35px;
+        }
+
+        nav ul li a {
+            color: var(--secondary-white);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--secondary-yellow);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: radial-gradient(circle at top right, rgba(10, 36, 99, 0.4), var(--bg-dark) 60%);
+            padding: 120px 5%;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .hero-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 60px;
+            flex-wrap: wrap-reverse;
+            width: 100%;
+        }
+
+        .hero-text {
+            flex: 1;
+            min-width: 320px;
+        }
+
+        .hero-text h1 {
+            font-size: 4.5rem;
+            margin-bottom: 15px;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+        }
+
+        .hero-text h1 span {
+            color: var(--secondary-yellow);
+            display: block;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin: 0 0 40px 0;
+            max-width: 500px;
+        }
+
+        /* Profile Image Placeholder Styling */
+        .hero-image-wrapper {
+            position: relative;
+            width: 350px;
+            height: 350px;
+            margin: 0 auto;
+        }
+
+        .hero-image-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            width: 100%;
+            height: 100%;
+            background-color: var(--secondary-yellow);
+            border-radius: 24px;
+            z-index: 1;
+            transition: transform 0.4s ease;
+        }
+
+        .hero-image-wrapper:hover::before {
+            transform: translate(10px, 10px);
+        }
+
+        .profile-img-placeholder {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: var(--blue-gradient);
+            border: 4px solid var(--secondary-white);
+            border-radius: 24px;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .profile-img-placeholder span {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .profile-img-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* display: none; was removed so the image actually shows up! */
+        }
+
+        /* Shared Section Styles */
+        section {
+            padding: 100px 5%;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            color: var(--secondary-white);
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .section-title span {
+            color: var(--secondary-yellow);
+        }
+
+        /* About & Education Section */
+        #about {
+            background-color: var(--bg-dark);
+        }
+
+        .about-divider {
+            width: 60px;
+            height: 4px;
+            background-color: var(--secondary-yellow);
+            margin: 0 auto 60px;
+            border-radius: 2px;
+        }
+
+        .info-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .info-card {
+            flex: 1;
+            min-width: 320px;
+            background: var(--blue-gradient);
+            padding: 50px 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-top: 5px solid var(--secondary-yellow);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .info-card::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(255, 213, 0, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            transition: transform 0.4s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .info-card:hover::after {
+            transform: scale(1.5);
+        }
+
+        .info-card h3 {
+            color: var(--secondary-yellow);
+            font-size: 2rem;
+            margin-bottom: 35px;
+            letter-spacing: 1px;
+        }
+
+        .detail-item {
+            margin-bottom: 25px;
+            padding-left: 15px;
+            border-left: 2px solid rgba(255, 255, 255, 0.1);
+            transition: border-color 0.3s ease;
+        }
+
+        .info-card:hover .detail-item {
+            border-left-color: rgba(255, 213, 0, 0.6);
+        }
+
+        .detail-item span {
+            display: block;
+            color: var(--secondary-yellow);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .detail-item p {
+            font-size: 1.1rem;
+            color: #e0e5ec; 
+        }
+
+        /* Projects Section */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 40px;
+            align-items: stretch; 
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            background: var(--bg-surface);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            transition: transform 0.4s ease, border-color 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%; 
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--secondary-yellow);
+            box-shadow: 0 15px 35px rgba(255, 213, 0, 0.05);
+        }
+
+        .project-card h3 {
+            color: var(--secondary-white);
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .project-card p {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-size: 1rem;
+            flex-grow: 1; 
+        }
+
+        .project-card .btn {
+            align-self: flex-start;
+            margin-top: auto; 
+        }
+
+        .projects-divider {
+            width: 60px;
+            height: 4px;
+            background-color: var(--secondary-yellow);
+            margin: 0 auto 60px;
+            border-radius: 2px;
+        }
+
+        /* Certificates Section */
+
+        .cert-section {
+          background: var(--bg-dark, #0a0a0a);
+          color: var(--c-text, #F8F9FA);
+          padding: 72px 32px;
+          box-sizing: border-box;
+          text-align: center;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+ 
+       .cert-heading {
+          font-size: clamp(28px, 5vw, 42px);
+          font-weight: 700;
+          color: var(--c-highlight, #FFD500);
+          margin: 0 0 14px;
+          line-height: 1.2;
+  }
+ 
+  .cert-divider {
+          width: 48px;
+          height: 3px;
+          background: var(--c-highlight, #FFD500);
+          border-radius: 2px;
+          margin: 0 auto 20px;
+  }
+ 
+ 
+  .cert-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+        max-width: 1000px;
+        margin: 0 auto;
+        text-align: left;
+  }
+ 
+  .cert-card {
+      background: var(--c-card, #111111);
+      border: 1px solid var(--c-border, #fff);
+      border-radius: 14px;
+      padding: 28px 26px 24px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.2s;
+  }
+ 
+  .cert-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at bottom right, rgba(10,36,99,0.15) 0%, transparent 65%);
+      pointer-events: none;
+  }
+ 
+  .cert-card:hover {
+      border-color: var(--c-highlight, #FFD500);
+      transform: translateY(-3px);
+  }
+ 
+  .cert-emoji {
+      font-size: 32px;
+      margin-bottom: 18px;
+      display: block;
+      line-height: 1;
+  }
+ 
+  .cert-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--c-highlight, #FFD500);
+      margin: 0 0 4px;
+      display: block;
+  }
+ 
+  .cert-issuer {
+      font-size: 13px;
+      color: var(--c-muted, #a0aec0);
+      margin: 0 0 14px;
+  }
+
+
+  .image-holder {
+    width: 100%;
+    border-radius: 10px;
+    border: 1.5px solid var(--c-border, #fff);
+  }
+ 
+  @media (max-width: 640px) {
+      .cert-grid {
+          grid-template-columns: 1fr;
+      }
+  }
+
+    /* Contact Section */
+    .contact-section {
+   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--c-bg, #0a0a0a);
+    color: var(--c-text, #F8F9FA);
+    padding: 64px 32px;
+    box-sizing: border-box;
+  }
+ 
+  .contact-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+ 
+  .contact-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border: 1.5px solid #3a3000;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #FFD500;
+    margin-bottom: 28px;
+  }
+ 
+  .contact-badge-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #FFD500;
+    animation: pulse 2s infinite;
+  }
+ 
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.4; }
+  }
+ 
+  .contact-heading {
+    font-size: clamp(28px, 4vw, 38px);
+    font-weight: 600;
+    color: #FFD500;
+    margin: 0 0 20px;
+    line-height: 1.2;
+  }
+ 
+  .contact-desc {
+    font-size: 17px;
+    line-height: 1.7;
+    color: #a0aec0;
+    margin: 0 0 32px;
+    max-width: 480px;
+  }
+ 
+  .contact-info-card {
+    background: #0a0a0a;
+    border: 1px solid #0A2463;
+    border-radius: 10px;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+ 
+  .contact-info-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+ 
+  .contact-info-row + .contact-info-row {
+    border-top: 1px solid #0A2463;
+    padding-top: 20px;
+  }
+ 
+  .contact-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    background: #051336;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #FFD500;
+  }
+ 
+  .contact-icon svg {
+    width: 20px; height: 20px;
+    fill: none; stroke: currentColor;
+    stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+  }
+ 
+  .contact-info-label {
+    font-size: 12px;
+    color: #a0aec0;
+    margin-bottom: 3px;
+    letter-spacing: 0.03em;
+  }
+ 
+  .contact-info-value {
+    font-size: 15px;
+    color: #F8F9FA;
+    font-weight: 500;
+  }
+ 
+  .contact-info-value a {
+    color: #ffff;
+    text-decoration: none;
+  }
+ 
+  .contact-info-value a:hover { text-decoration: underline; }
+ 
+  .contact-right {
+    background: #000000;
+    border: 1.5px solid #FFD500;
+    border-radius: 14px;
+    padding: 36px 32px;
+  }
+ 
+  .contact-form-group { margin-bottom: 22px; }
+ 
+  .contact-form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #F8F9FA;
+    margin-bottom: 8px;
+  }
+ 
+  .contact-form-group input,
+  .contact-form-group textarea {
+    width: 100%;
+    background: #000000;
+    border: 1.5px solid #FFD500;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-family: var(--font, 'Space Grotesk', sans-serif);
+    font-size: 15px;
+    color: #F8F9FA;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    resize: vertical;
+  }
+ 
+  .contact-form-group input::placeholder,
+  .contact-form-group textarea::placeholder { color: #a0aec0; }
+ 
+  .contact-form-group input:focus,
+  .contact-form-group textarea:focus {
+    border-color: #FFD500;
+    box-shadow: 0 0 0 3px rgba(255, 213, 0, 0.15);
+  }
+ 
+  .contact-form-group textarea { min-height: 150px; }
+
+  .contact-submit-btn {
+    width: 100%;
+    padding: 14px 24px;
+    background: #FFD500;
+    color: #000000;
+    border: none;
+    border-radius: 10px;
+    font-family: var(--font, 'Space Grotesk', sans-serif);
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+ 
+  .contact-submit-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+ 
+  .contact-submit-btn svg {
+    width: 18px; height: 18px;
+    fill: none; stroke: currentColor;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  }
+ 
+  @media (max-width: 720px) {
+    .contact-inner { grid-template-columns: 1fr; }
+  }
+
+        /* Tech Tags */
+        .tags {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(10, 36, 99, 0.5);
+            color: var(--secondary-yellow);
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 14px 35px;
+            background-color: var(--secondary-yellow);
+            color: var(--bg-dark);
+            text-decoration: none;
+            font-weight: 800;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1.5px;
+            align-self: flex-start;
+        }
+
+        .btn:hover {
+            background-color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 213, 0, 0.3);
+        }
+
+        /* Contact Section */
+        .contact {
+            background: radial-gradient(circle at center, #0A2463 0%, var(--bg-dark) 70%);
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .contact p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Glow effect for main CTA button */
+        .btn-glow {
+            box-shadow: 0 0 20px rgba(255, 213, 0, 0.4);
+        }
+        .btn-glow:hover {
+            box-shadow: 0 0 30px rgba(255, 213, 0, 0.7);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--bg-dark);
+            color: #555;
+            text-align: center;
+            padding: 30px;
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 900px) {
+            .hero-container {
+                justify-content: center;
+                text-align: center;
+            }
+            .hero-text h1 {
+                font-size: 3.5rem;
+            }
+            nav ul {
+                display: none; /* Can be updated to a hamburger menu later if needed */
+            }
+            /* Stacks the projects neatly on mobile */
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#home" class="logo">NORRIENE<span>.</span></a>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#certificates">Certificates</a></li>
+             <li><a href="#contact">Contact</a></li>
+            
+        </ul>
+    </nav>
+
+    <header class="hero" id="home">
+        <div class="hero-container">
+            
+            <div class="hero-text">
+                <h1>Hi, I'm <br><span>Norriene</span></h1>
+                <p>Bachelor of Science in Information Technology Student & Aspiring Tech Professional based in Panabo City.</p>
+                <a href="#projects" class="btn">View My Work</a>
+            </div>
+
+            <div class="hero-image-wrapper">
+                <div class="profile-img-placeholder">
+                    <img src="renren.jpg" alt="Norriene Grace Millan">
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <section id="about">
+        <h2 class="section-title">My <span>Background</span></h2>
+          <div class="about-divider"></div>
+        
+        <div class="info-grid">
+            
+            <div class="info-card">
+                <h3>Personal Info</h3>
+                <div class="detail-item">
+                    <span>Full Name</span>
+                    <p>Norriene Grace Millan</p>
+                </div>
+                <div class="detail-item">
+                    <span>Date of Birth</span>
+                    <p>March 6, 2004</p>
+                </div>
+                <div class="detail-item">
+                    <span>Location</span>
+                    <p>Purok 4, Regis Area, Southern Davao, Panabo City</p>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h3>Education</h3>
+                <div class="detail-item">
+                    <span>College (2022 - 2026)</span>
+                    <p>Bachelor of Science in Information Technology<br>Davao del Norte State College</p>
+                </div>
+                <div class="detail-item">
+                    <span>Secondary (2017 - 2022)</span>
+                    <p>Information Communication Technology (ICT)<br>Panabo City National High School</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2 class="section-title">Featured <span>Projects</span></h2>
+         <div class="projects-divider"></div>
+
+        
+        <div class="project-grid">
+            <div class="project-card">
+              <img src="schoolpulse.png" alt="SchoolPulse Dashboard" class="image-holder">
+                <h3>SchoolPulse</h3>
+                <p>A comprehensive academic management system designed for elementary schools (Grades 1-6). It streamlines faculty management, admissions, and student tracking through a centralized, live database architecture.</p>
+                <a href="https://schoolpulse.online" class="btn">View Project</a>
+            </div>
+
+            
+            <div class="project-card">
+              <img src="ladolce.png" alt="La Dolce POS System" class="image-holder">
+                <h3>LA Dolce</h3>
+                <p>La Dolce POS system is a full stack software designed to manage restaurants. A striking aesthetic is evident in this authentication module where a high-contrast composition is paired with bold typography to make it easily accessible and user-friendly. The interface is designed to accommodate secure access into the administration, where a friendly display of the brand gives way to an impressive point-of-sale toolkit, as a demonstration of the value of both visual and operational excellence.</p>
+                <a href="#" class="btn">View Project</a>
+            </div>
+
+            <div class="project-card">
+              <img src="booknest.png" alt="BookNest Inventory System" class="image-holder">
+                <h3>BookNest</h3>
+                <p>BookNest is an all-in-one inventory management system that offers to streamline and automate the daily activities of a bookstore. The system has a centralized dashboard that enables the shop owners and staff to monitor their whole collection conveniently, leaving behind manual tracking and establishing a dynamic and digital space. The prototype will enable real-time inventory changes by establishing a powerful CRUD (Create, Read, Update, Delete) system, so that the stock levels, price, and genres of the music are always correct. A very convenient system is able to reduce operational bottlenecks, and users are able to check the availability of books within seconds and have a very well-organized storefront.</p>
+                <a href="#" class="btn">View Project</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CERTIFICATES SECTION ===== -->
+
+<section class="cert-section" id="certificates">
+  <h2 class="cert-heading">Certificates &amp; Achievements</h2>
+  <div class="cert-divider"></div>
+
+  <div class="cert-grid">
+
+    <div class="cert-card">
+      <span class="cert-emoji">📡</span>
+      <span class="cert-title">Introduction to Packet Tracer</span>
+      <img src="packet.jpg" alt="" class="image-holder">
+      <p class="cert-issuer">Cisco Networking Academy</p>
+    </div>
+
+    <div class="cert-card">
+      <span class="cert-emoji">🧠</span>
+      <span class="cert-title">Advanced Seminar - Day 1</span>
+      <img src="ad-1.png" alt="" class="image-holder">
+      <p class="cert-issuer">Davao del Norte State College</p>
+
+    </div>
+
+    <div class="cert-card">
+      <span class="cert-emoji">🧠</span> 
+      <span class="cert-title">Advanced Seminar - Day 2</span>
+      <img src="ad-2.png" alt="" class="image-holder">
+      <p class="cert-issuer">Davao del Norte State College</p>
+    </div>
+
+    <div class="cert-card">
+      <span class="cert-emoji">👥</span>
+      <span class="cert-title">Level App (Team Project)</span>
+      <img src="parti.jpg" alt="" class="image-holder">
+      <p class="cert-issuer">Davao del Norte State College</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ===== CONTACT SECTION ===== -->
+
+<section class="contact-section" id="contact">
+  <div class="contact-inner">
+
+    <!-- LEFT -->
+    <div class="contact-left">
+      <div class="contact-badge">
+        <span class="contact-badge-dot"></span>
+        Currently Open to Work
+      </div>
+
+      <h2 class="contact-heading">Let's Connect</h2>
+
+
+      <div class="contact-info-card">
+        <div class="contact-info-row">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+          </div>
+          <div>
+            <div class="contact-info-label">Email</div>
+            <div class="contact-info-value">
+              <a href="mailto:millanorrienegrace@gmail.com">millanorrienegrace@gmail.com</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-info-row">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          </div>
+          <div>
+            <div class="contact-info-label">Location</div>
+            <div class="contact-info-value">Panabo City, Davao del Norte</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT (form) -->
+    <div class="contact-right">
+      <div class="contact-form-group">
+        <label for="contact-name">Your Name</label>
+        <input type="text" id="contact-name" placeholder="Norriene Grace Millan">
+      </div>
+
+      <div class="contact-form-group">
+        <label for="contact-email">Email Address</label>
+        <input type="email" id="contact-email" placeholder="norrienegracemillan@example.com">
+      </div>
+
+      <div class="contact-form-group">
+        <label for="contact-message">Message</label>
+        <textarea id="contact-message" placeholder="Tell me about your project/concern/question..."></textarea>
+      </div>
+
+      <button class="contact-submit-btn" type="button">
+        <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        Send Message
+      </button>
+    </div>
+
+  </div>
+</section>
+
+    <footer>
+        <p>&copy; 2026 Norriene Grace Millan. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
