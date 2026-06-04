@@ -948,8 +948,18 @@
       </div>
     </div>
 
+<script src="https://cdn.emailjs.com/sdk/3.2.0/email.min.js"></script>
 <script>
 (function(){
+  // Replace the following IDs with your EmailJS credentials:
+  const EMAILJS_USER_ID = 'YOUR_USER_ID';
+  const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';
+  const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
+
+  if(window.emailjs && EMAILJS_USER_ID && EMAILJS_USER_ID !== 'YOUR_USER_ID'){
+    emailjs.init(EMAILJS_USER_ID);
+  }
+
   const btn = document.getElementById('contact-submit');
   const overlay = document.getElementById('popup-overlay');
   const popupMsg = document.getElementById('popup-msg');
@@ -989,17 +999,36 @@
       return;
     }
 
-    const subject = `Message from ${name}`;
-    const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
-    const mailto = 'mailto:millanorrienegrace@gmail.com' + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-
-    // Open user's email client
-    window.location.href = mailto;
-
-    // Show popup and auto-close after 3s (cannot guarantee actual send)
-    setTimeout(function(){
-      showPopup('Your Email is already sent! I will get back to you as soon as possible. Thank you!', 3000);
-    }, 500);
+    // If EmailJS is configured use it to send the message directly from the client
+    if(window.emailjs && EMAILJS_SERVICE_ID !== 'YOUR_SERVICE_ID' && EMAILJS_TEMPLATE_ID !== 'YOUR_TEMPLATE_ID'){
+      btn.disabled = true;
+      const templateParams = {
+        to_email: 'millanorrienegrace@gmail.com',
+        subject: name,
+        from_name: name,
+        reply_to: email,
+        from_email: email,
+        message: message
+      };
+      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+        .then(function(response){
+          showPopup('Message sent — thank you!', 3000);
+          document.getElementById('contact-name').value = '';
+          document.getElementById('contact-email').value = '';
+          document.getElementById('contact-message').value = '';
+        }, function(error){
+          console.error('EmailJS error:', error);
+          showPopup('Failed to send message. Please try again later.', 4000);
+        })
+        .finally(function(){ btn.disabled = false; });
+    } else {
+      // Fallback: if EmailJS not configured, open user's email client
+      const subject = `Message from ${name}`;
+      const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
+      const mailto = 'mailto:millanorrienegrace@gmail.com' + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+      window.location.href = mailto;
+      setTimeout(function(){ showPopup('Email client opened. Please send the email from your email client.', 3000); }, 500);
+    }
   });
 })();
 </script>
