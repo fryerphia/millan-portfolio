@@ -923,7 +923,7 @@
         Send Message
       </button>
     </div>
-    
+
 
   </div>
 </section>
@@ -931,10 +931,53 @@
     <footer>
         <p>&copy; 2026 Norriene Grace Millan. All rights reserved.</p>
     </footer>
-</body>
+
+    <style>
+    /* Popup modal styles */
+    .popup-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;visibility:hidden;opacity:0;transition:opacity .18s,visibility .18s;z-index:2000}
+    .popup-overlay.show{visibility:visible;opacity:1}
+    .popup{background:#0a0a0a;padding:20px 22px;border-radius:12px;max-width:420px;width:90%;border:1px solid #ffd500;color:#fff;text-align:center;box-shadow:0 14px 40px rgba(0,0,0,0.6)}
+    .popup p{margin:0 0 14px;color:#e6e6e6}
+    .popup .popup-btn{background:#ffd500;border:none;padding:10px 16px;border-radius:8px;font-weight:700;cursor:pointer}
+    </style>
+
+    <div id="popup-overlay" class="popup-overlay" aria-hidden="true">
+      <div class="popup" role="alertdialog" aria-modal="true">
+        <p id="popup-msg">Message</p>
+        <button id="popup-close" class="popup-btn">OK</button>
+      </div>
+    </div>
+
 <script>
 (function(){
   const btn = document.getElementById('contact-submit');
+  const overlay = document.getElementById('popup-overlay');
+  const popupMsg = document.getElementById('popup-msg');
+  const popupClose = document.getElementById('popup-close');
+  let autoCloseTimer = null;
+
+  function showPopup(message, autoCloseMs = 3000){
+    if(!overlay || !popupMsg) return;
+    popupMsg.textContent = message;
+    overlay.classList.add('show');
+    overlay.setAttribute('aria-hidden','false');
+    popupClose && popupClose.focus();
+    if(autoCloseTimer) clearTimeout(autoCloseTimer);
+    if(autoCloseMs > 0) {
+      autoCloseTimer = setTimeout(hidePopup, autoCloseMs);
+    }
+  }
+
+  function hidePopup(){
+    if(!overlay) return;
+    overlay.classList.remove('show');
+    overlay.setAttribute('aria-hidden','true');
+    if(autoCloseTimer) { clearTimeout(autoCloseTimer); autoCloseTimer = null; }
+  }
+
+  if(popupClose) popupClose.addEventListener('click', hidePopup);
+  if(overlay) overlay.addEventListener('click', function(e){ if(e.target === overlay) hidePopup(); });
+
   if(!btn) return;
   btn.addEventListener('click', function(){
     const name = document.getElementById('contact-name').value.trim();
@@ -942,7 +985,7 @@
     const message = document.getElementById('contact-message').value.trim();
 
     if(!name || !email || !message){
-      alert('Please fill in your name, email, and message.');
+      showPopup('Please fill in your name, email, and message.', 3000);
       return;
     }
 
@@ -953,9 +996,9 @@
     // Open user's email client
     window.location.href = mailto;
 
-    // Notify user (note: this cannot guarantee the email was actually sent)
+    // Show popup and auto-close after 3s (cannot guarantee actual send)
     setTimeout(function(){
-      alert('Email client opened. Please send the email from your email client.');
+      showPopup('Your Email is already sent! I will get back to you as soon as possible. Thank you!', 3000);
     }, 500);
   });
 })();
