@@ -84,7 +84,7 @@
 
         /* Hero Section */
         .hero {
-            background: radial-gradient(circle at top right, rgba(10, 36, 99, 0.4), var(--bg-dark) 60%);
+            background: radial-gradient(circle at top right, rgba(99, 81, 10, 0.4), var(--bg-dark) 60%);
             padding: 120px 5%;
             min-height: 85vh;
             display: flex;
@@ -223,7 +223,7 @@
         .info-card {
             flex: 1;
             min-width: 320px;
-            background: var(--blue-gradient);
+            background: var(--bg-dark);
             padding: 50px 40px;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
@@ -910,7 +910,7 @@
 
       <div class="contact-form-group">
         <label for="contact-email">Email Address</label>
-        <input type="email" id="contact-email" placeholder="norrienegracemillan@example.com">
+        <input type="email" id="contact-email" placeholder="millanorrienegrace@gmail.com">
       </div>
 
       <div class="contact-form-group">
@@ -918,7 +918,7 @@
         <textarea id="contact-message" placeholder="Tell me about your project/concern/question..."></textarea>
       </div>
 
-      <button id="contact-submit" class="contact-submit-btn" type="button">
+      <button id="contact-submit" class="contact-submit-btn" type="button" onclick="sentEmail()">
         <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
         Send Message
       </button>
@@ -932,106 +932,12 @@
         <p>&copy; 2026 Norriene Grace Millan. All rights reserved.</p>
     </footer>
 
-    <style>
-    /* Popup modal styles */
-    .popup-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;visibility:hidden;opacity:0;transition:opacity .18s,visibility .18s;z-index:2000}
-    .popup-overlay.show{visibility:visible;opacity:1}
-    .popup{background:#0a0a0a;padding:20px 22px;border-radius:12px;max-width:420px;width:90%;border:1px solid #ffd500;color:#fff;text-align:center;box-shadow:0 14px 40px rgba(0,0,0,0.6)}
-    .popup p{margin:0 0 14px;color:#e6e6e6}
-    .popup .popup-btn{background:#ffd500;border:none;padding:10px 16px;border-radius:8px;font-weight:700;cursor:pointer}
-    </style>
-
-    <div id="popup-overlay" class="popup-overlay" aria-hidden="true">
-      <div class="popup" role="alertdialog" aria-modal="true">
-        <p id="popup-msg">Message</p>
-        <button id="popup-close" class="popup-btn">OK</button>
-      </div>
-    </div>
-
-<script src="https://cdn.emailjs.com/sdk/3.2.0/email.min.js"></script>
-<script>
-(function(){
-  // Replace the following IDs with your EmailJS credentials:
-  const EMAILJS_USER_ID = 'YOUR_USER_ID';
-  const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';
-  const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
-
-  if(window.emailjs && EMAILJS_USER_ID && EMAILJS_USER_ID !== 'YOUR_USER_ID'){
-    emailjs.init(EMAILJS_USER_ID);
-  }
-
-  const btn = document.getElementById('contact-submit');
-  const overlay = document.getElementById('popup-overlay');
-  const popupMsg = document.getElementById('popup-msg');
-  const popupClose = document.getElementById('popup-close');
-  let autoCloseTimer = null;
-
-  function showPopup(message, autoCloseMs = 3000){
-    if(!overlay || !popupMsg) return;
-    popupMsg.textContent = message;
-    overlay.classList.add('show');
-    overlay.setAttribute('aria-hidden','false');
-    popupClose && popupClose.focus();
-    if(autoCloseTimer) clearTimeout(autoCloseTimer);
-    if(autoCloseMs > 0) {
-      autoCloseTimer = setTimeout(hidePopup, autoCloseMs);
-    }
-  }
-
-  function hidePopup(){
-    if(!overlay) return;
-    overlay.classList.remove('show');
-    overlay.setAttribute('aria-hidden','true');
-    if(autoCloseTimer) { clearTimeout(autoCloseTimer); autoCloseTimer = null; }
-  }
-
-  if(popupClose) popupClose.addEventListener('click', hidePopup);
-  if(overlay) overlay.addEventListener('click', function(e){ if(e.target === overlay) hidePopup(); });
-
-  if(!btn) return;
-  btn.addEventListener('click', function(){
-    const name = document.getElementById('contact-name').value.trim();
-    const email = document.getElementById('contact-email').value.trim();
-    const message = document.getElementById('contact-message').value.trim();
-
-    if(!name || !email || !message){
-      showPopup('Please fill in your name, email, and message.', 3000);
-      return;
-    }
-
-    // If EmailJS is configured use it to send the message directly from the client
-    if(window.emailjs && EMAILJS_SERVICE_ID !== 'YOUR_SERVICE_ID' && EMAILJS_TEMPLATE_ID !== 'YOUR_TEMPLATE_ID'){
-      btn.disabled = true;
-      const templateParams = {
-        to_email: 'millanorrienegrace@gmail.com',
-        subject: name,
-        from_name: name,
-        reply_to: email,
-        from_email: email,
-        message: message
-      };
-      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
-        .then(function(response){
-          showPopup('Message sent — thank you!', 3000);
-          document.getElementById('contact-name').value = '';
-          document.getElementById('contact-email').value = '';
-          document.getElementById('contact-message').value = '';
-        }, function(error){
-          console.error('EmailJS error:', error);
-          showPopup('Failed to send message. Please try again later.', 4000);
-        })
-        .finally(function(){ btn.disabled = false; });
-    } else {
-      // Fallback: if EmailJS not configured, open user's email client
-      const subject = `Message from ${name}`;
-      const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
-      const mailto = 'mailto:millanorrienegrace@gmail.com' + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-      window.location.href = mailto;
-      setTimeout(function(){ showPopup('Email client opened. Please send the email from your email client.', 3000); }, 500);
-    }
-  });
-})();
-</script>
-
+    <script>
+        function sentEmail() {
+            mailtoLink = "mailto:millanorrienegrace@gmail.com";
+            window.location.href = mailtoLink;
+        }
+    </script>
+    
 </body>
 </html>
