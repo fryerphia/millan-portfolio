@@ -734,6 +734,7 @@
     <nav>
         <a href="#home" class="logo">NORRIENE<span>.</span></a>
         <ul>
+            <li><a href="#home">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#projects">Projects</a></li>
             <li><a href="#certificates">Certificates</a></li>
@@ -749,6 +750,7 @@
                 <h1>Hi, I'm <br><span>Norriene</span></h1>
                 <p>Bachelor of Science in Information Technology Student & Aspiring Tech Professional based in Panabo City.</p>
                 <a href="#projects" class="btn">View My Work</a>
+                <a href="#" class="btn">Download CV</a>
             </div>
 
             <div class="hero-image-wrapper">
@@ -830,7 +832,7 @@
     <!-- ===== CERTIFICATES SECTION ===== -->
 
 <section class="cert-section" id="certificates">
-  <h2 class="cert-heading">Certificates &amp; Achievements</h2>
+  <h2 class="section-title"> <span>Certificates</span> &amp; Achievements</h2>
   <div class="cert-divider"></div>
 
   <div class="cert-grid">
@@ -1000,31 +1002,24 @@
 </script>
 
 <script>
-    // Get Certificate Viewer Elements
     const certOverlay = document.getElementById('cert-viewer-overlay');
     const certViewerImg = document.getElementById('cert-viewer-img');
     const closeViewerBtn = document.getElementById('close-viewer-btn');
 
-    // Attach click events to all certificate cards
     document.querySelectorAll('.cert-card').forEach(card => {
         card.addEventListener('click', function() {
-            // Find the image element inside the clicked card
             const imgElement = this.querySelector('.image-holder');
             if (imgElement && imgElement.src) {
-                // Set the full-screen image src to match the clicked image
                 certViewerImg.src = imgElement.src;
-                // Reveal the overlay
                 certOverlay.style.display = 'flex';
             }
         });
     });
 
-    // Close viewer when clicking the 'X' button
     closeViewerBtn.addEventListener('click', function() {
         certOverlay.style.display = 'none';
     });
 
-    // Close viewer when clicking anywhere on the black background overlay
     certOverlay.addEventListener('click', function(event) {
         if (event.target === certOverlay || event.target === closeViewerBtn) {
             certOverlay.style.display = 'none';
